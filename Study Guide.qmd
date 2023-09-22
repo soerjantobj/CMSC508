@@ -1,0 +1,95 @@
+---
+title: Study Guide
+date: last-modified
+author: Bryan Soerjanto
+format: html
+---
+
+### Database Design Process
+
+:::: {.columns}
+
+::: {.column width="50%"}
+1. Understand requirements
+    * Problem domain
+    * Need
+    * Context, Scope, Perspective
+    * Use cases & roles
+    * Security & Privacy
+    * Use cases & Queries
+2. Conceptual design
+    * Entities, Attributes, Relationships
+    * Entity-Relationship Diagrams
+3. Logical design
+    * Convert entties, attributes, & relationships to tables
+    * Normalization & functional analysis
+:::
+:::{.column width="50%"}
+4. Physical design
+    * Fully defined tables
+    * Integrity constraints & triggers
+    * Reporting; adding views
+    * Maintenance; adding procedures
+    * Consider access; define API
+5. Implementation
+    * Code it
+    * Run & test
+    * Debug
+    * Repeat
+:::
+::::
+
+Normalization
+: Reorganization of columns and tables of relational database to minimize data redundancy and inconsistencies
+
+Entity Relationship Diagrams
+: Maps meaning and interactions of real-world entities to a conceptual schema
+
+### Entity Relationship Components
+Entities
+: Represent real-world objects, concepts, or things, represented with rectangle
+
+Attributes
+: Properties and characteristics that describe entities
+
+Relationships
+: Illustrates how entites are related to each other
+
+
+:::: {.columns}
+::: {.column width="50%"}
+### Chen Notation
+```{dot}
+graph  ER{
+    layout = neato;
+    node[shape = box, width = 0.5]; building; room
+    node[shape = ellipse]; address, occupant, room_num
+    node[shape = diamond]; has
+
+    building -- has [label = "1"]
+    has -- room [label = "n"]
+
+    building -- address
+    room -- occupant, room_num
+}
+```
+:::
+
+::: {.column width="50%" margin="center"}
+### Crow's Foot Notation
+```{mermaid}
+%%| fig-width: 5
+erDiagram
+
+building ||-- |{ room : has
+
+building{
+    string address
+}
+room{
+    string occupant
+    string number
+}
+```
+:::
+::::
