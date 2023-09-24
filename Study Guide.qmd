@@ -49,11 +49,26 @@ Entity Relationship Diagrams
 Entities
 : Represent real-world objects, concepts, or things, represented with rectangle
 
+* **Strong** Entities exist independently
+* **Weak** Entities depend on a strong entity.
+* If Strong Entity is deleted, all Weak Entities are deleted
+
 Attributes
 : Properties and characteristics that describe entities
 
+* **Simple Attributes** cannot be divided any further, whereas **Composites** can
+* "Full Name" can be divided into "First Name" and "Last Name"
+* **Multi-Valued attributes** can have multiple values for a single individual
+* **Derived Attributes** are values that can be calculated from other attributes
+* **Key Attributes** help uniquely identify entities.
+
 Relationships
 : Illustrates how entites are related to each other
+
+* **Recursive Relationships** are entities that relate with itself
+* **Associative Entity** hold extra data about the relationship, usually N:M
+* **N-Ary Relationships** involve more than two entities, commonly ternary relationships
+
 
 
 :::: {.columns}
@@ -62,15 +77,16 @@ Relationships
 ```{dot}
 graph  ER{
     layout = neato;
+    scale = 4.0
     node[shape = box, width = 0.5]; building; room
     node[shape = ellipse]; address, occupant, room_num
     node[shape = diamond]; has
 
-    building -- has [label = "1"]
-    has -- room [label = "n"]
+    building -- has [label = "1", len = "0.25"]
+    has -- room [label = "n", len = "0.25"]
 
-    building -- address
-    room -- occupant, room_num
+    building -- address [len = "0.25"]
+    room -- occupant, room_num [len = "0.25"]
 }
 ```
 :::
@@ -93,3 +109,126 @@ room{
 ```
 :::
 ::::
+
+### Cardinality
+number of instances of one entity associated with number of instances of another entity through a relationship
+
+One-to-One (1:1)
+: each instance of one entity is related to only one instance of another entity
+
+One-to-Many (1:N)
+: each instance of one entity can be related to multiple instances of another entity, but instance of the other entity is related to only one of the first entity
+
+Many-to-Many (N:M)
+: each instance of one entity can be related to many instances of another, and vice versa
+
+### Participation
+indicates whether an instance of an entity is required to have a corresponding related instance in the related entity
+
+Total Participation
+: every instance of the participating entity must be related to at least one instance of the related entity.
+
+Partial Participation
+: instance of the participating entity may or may not be related to an instance of the related entity.
+
+### Supertype and Subtypes
+Entities can either be generalized or specialized to improve data integrity and minimize redundancies
+
+* "Vehicle" can be a supertype for the subtypes "Car" and "Motorcycle"
+* Employee can be supertype for the subtypes "Engineer" and "Manager"
+
+::: {.grid}
+
+::: {.g-col-6}
+### Database Ecosystem
+* Users and user needs
+* Ways to connect
+* Query Processor
+* Storage Manager
+* Physical Storage
+:::
+::: {.g-col-6}
+### Designing a database
+* Develop better understanding of the database itself
+* Helps smoothly translate conceptual and logical design into the physical design
+* Choice of database may constrain or shape the final design
+:::
+:::
+
+### Users and User Needs
+:::{.grid}
+
+:::{.g-col-6}
+End User
+: uses API to access database
+
+Application Programmer
+: Devlops API
+
+Business Analyst
+: Uses query tools to directly access database
+:::
+:::{.g-col-6}
+Database Administrator
+: Designs logical and physical schemas
+: Handles security and authorization
+: Oversees data availability, crash recovery, software updates
+: Monitors performance and tunes database as needs evolve
+: Manages users and access control
+:::
+:::
+
+:::{.grid}
+:::{.g-col-6}
+### Storage Manager
+program that provides interface between low-level data in database, programs, and queries submitted to a system
+
+**Responsible for**
+
+* Interaction wtih file manager
+* efficient storing, retrieving, and updating data
+
+**Considerations**
+
+* Types of storage access
+* Types of file organization
+* Types of indexing and hashing
+* Types of authorization and access control
+* Data integrity
+:::
+:::{.g-col-6}
+### Query Manager
+* Request Query (input)
+    * query parser
+    * relational algebraic evaluation
+    * optimizer
+    * planner (detailed code)
+    * evaluator
+* Response Query (output)
+
+![](query-manager.png)
+:::
+:::
+
+### Transaction Example
+Transaction
+: collection of operations that perform a logical function in a database application
+
+Transaction-Manager
+: ensures database consistency despite system and transaction failures
+
+Concurrency-Control Manager
+: controls interaction among concurrent transactions to ensure database consistency
+
+### ACID Properties
+Atomicity
+: All operations of transaction are properly refleted in database, or none are
+
+Consistency
+: Execution of a transaction in isolation preserves the consistency of the database
+
+Isolation
+: Each transaction must be independent of other concurrently executing transactions
+
+Durability
+: After a successful transaction, changes made to database persists, even after system failures.
