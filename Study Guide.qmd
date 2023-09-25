@@ -232,3 +232,200 @@ Isolation
 
 Durability
 : After a successful transaction, changes made to database persists, even after system failures.
+
+::: {.grid}
+::: {.g-col-6}
+### Data Defined Language (DDL)
+* DDL compiler generates a set of tables stored in a data dictionary
+* Data dictionary contains metadata on:
+    * tables, fields, data types
+    * primary & foreign keys
+    * data integrity constants
+    * referential integrity
+    * authorization rules
+:::
+::: {.g-col-6}
+### Data Manipulation Language (DML)
+provides statements for non-data related activities in database
+
+* managing users
+* tuning storage
+* backing up database
+* physical storage management on system
+* communication with other systems
+:::
+:::
+### Relational Model - Entities
+::: {.grid}
+::: {.g-col-6}
+* Tables represent entities
+* Fields are columns in tables that represent attributes
+* Records (tuples) are rows in tables that are instances of data
+* Keys are relationships between tables
+
+Schema
+: Complete definition: entities, attributes, relations, data types, & constraints
+
+SQL (Structured Query Language)
+: Most widely used query declarative language for accessing relational databases
+:::
+::: {.g-col-6}
+```
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    year INT
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    credit_hours INT
+);
+
+CREATE TABLE student_courses (
+    student_id INT,
+    course_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+    PRIMARY KEY (student_id, course_id)
+);
+```
+:::
+:::
+
+### Relational Model - Attributes
+::: {.grid}
+::: {.g-col-6}
+Attributes
+: Represented as fields or columns
+
+Domain
+: set of allowed values for each field
+
+Null
+: member of every domain. DB designer must specify to include NULL or NOT NULL
+
+Attributes have specific data types. DDL specifies the data types:
+
+* String
+* Numeric
+* Date
+* Object
+
+:::
+:::{.g-col-6}
+Relation Notation
+: represents tables or entities
+
+* relationName (ID, Attr1, ..., AttrN)
+* student (id, title, credit_hours)
+* course (id, title, credit_hours)
+
+Modifiers for individual attributes can be added
+
+* student (id [PK], title, credit_hours)
+* course (id [PK], title, credit_hours)
+:::
+:::
+
+### Relational Model - Key
+Key
+: Any field in a table used to uniquely identify each tuple with any data type
+
+Records can have multiple keys
+
+* **Super key** is a key of one or more fields
+* **Candidate key** is a key of minimal size
+* **Primary key** is selected from one of the candidate keys to be the the unique identifier of a tuple
+* Every relation must have a primary key
+
+### Relational Model - Relationships
+Relationships between tables and rows are modeled by connecting individual records using their keys
+
+Foreign Key
+: column in table containing copies of keys from another table referencing related rows. Must contain valid references or must be NULL
+
+An attribute can be both a primary and foreign key referencing a column of a nother table
+
+Foreign Keys do not have to have the same name as the referenced key
+
+Cardinality and participation represented through foreign keys and integrity contraints
+
+### Relational Model - Integrity Constraints
+Integrity constraint
+* condition that must be true for every instance in the relation
+* specified in definition of the database schema
+* verified by DBMS at every CRUD operation (Create, read, update, delete)
+
+::: {.grid}
+::: {.g-col-6}
+**Domain Integrity**
+
+* ensures that fields contain correct data
+* by data type
+* by length or size
+* by negative values
+* by set of allowed values
+* by NULL or NOT NULL
+* by UNIQUE or not
+
+:::
+::: {.g-col-6}
+**Referential Integrity**
+
+* maintains cardinality and participation
+* primary keys must be unique
+* foreign keys must exist
+
+:::
+:::
+
+### Relational Algebra
+
+::: {.grid}
+::: {.g-col-4}
+**Relational Operators**
+
+* σ - Selection
+    - outputs rows of the relation
+* π - Projection
+    - outputs columns of relation
+* ρ - Rename
+    - renames table
+
+:::
+::: {.g-col-4}
+**Set Operators**
+
+* ∪ - Union
+* ∩ - Intersection
+* -- - Difference
+
+
+**Logical Operators**
+
+* ∧ - AND
+* ∨ - OR
+* ¬ - NOT
+
+:::
+::: {.g-col-4}
+**Joins and Products**
+
+* ⋈ - Natural Join
+* ⋈~θ~ - Theta Join
+* ⟕ - Left Outer Join
+* ⟖ - Right Outer Join
+* ⟗ - Full Outer Join
+* ⨯ - Cartesian Product
+* ÷ - Division
+
+:::
+:::
+
+### Extra Notes
+
+* Tuple = Row
+* Degree = Number of Columns
+* Cardinality = Number of Rows
